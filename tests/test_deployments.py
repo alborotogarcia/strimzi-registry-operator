@@ -202,6 +202,9 @@ def test_create_deployment_configurations() -> None:
         sasl_jaas_config=None,
         sasl_login_callback_handler_class=None,
         sasl_oauthbearer_token_endpoint_url=None,
+        authentication_method=None,
+        authentication_roles=None,
+        authentication_realm=None,
     )
     assert dep_body["spec"]["template"]["spec"]["containers"][0]["image"] == (
         f"{registry_image}:{registry_image_tag}"
@@ -246,6 +249,9 @@ def test_create_deployment_resource_settings() -> None:
         sasl_jaas_config=None,
         sasl_login_callback_handler_class=None,
         sasl_oauthbearer_token_endpoint_url=None,
+        authentication_method=None,
+        authentication_roles=None,
+        authentication_realm=None,
     )
     print(dep_body)
     resources = dep_body["spec"]["template"]["spec"]["containers"][0][

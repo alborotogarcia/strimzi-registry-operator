@@ -141,6 +141,9 @@ def create_deployment(
     sasl_jaas_config: Optional[str],
     sasl_login_callback_handler_class: Optional[str],
     sasl_oauthbearer_token_endpoint_url: Optional[str],
+    authentication_method: Optional[str],
+    authentication_roles: Optional[str],
+    authentication_realm: Optional[str],
 ) -> Dict[str, Any]:
     """Create the JSON resource for a Deployment of the Confluence Schema
     Registry.
@@ -193,9 +196,12 @@ def create_deployment(
         ensuring continuous authentication without user intervention.
         Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
-    sasl_oauthbearer_token_endpoint_url : `str`
+    authentication_method : `str`
         The SASL oauthbearer token endpoint url.
-
+    authentication_roles : `str`
+        <user-role1>,<user-role2>,...
+    authentication_realm : `str`
+        <section-in-jaas_config.conf>
 
     Returns
     -------
@@ -219,6 +225,9 @@ def create_deployment(
         sasl_jaas_config=sasl_jaas_config,
         sasl_login_callback_handler_class=sasl_login_callback_handler_class,
         sasl_oauthbearer_token_endpoint_url=sasl_oauthbearer_token_endpoint_url,  # noqa: E501
+        authentication_method=authentication_method,
+        authentication_roles=authentication_roles,
+        authentication_realm=authentication_realm,
     )
 
     # The pod template
@@ -275,6 +284,9 @@ def create_container_spec(
     sasl_jaas_config: Optional[str],
     sasl_login_callback_handler_class: Optional[str],
     sasl_oauthbearer_token_endpoint_url: Optional[str],
+    authentication_method: Optional[str],
+    authentication_roles: Optional[str],
+    authentication_realm: Optional[str],
 ) -> Dict[str, Any]:
     """Create the container spec for the Schema Registry deployment.
 
@@ -322,6 +334,12 @@ def create_container_spec(
         OAuth 2.0 password grant method.
     sasl_oauthbearer_token_endpoint_url : `str`
         The SASL oauthbearer token endpoint url.
+    authentication_method : `str`
+        The SASL oauthbearer token endpoint url.
+    authentication_roles : `str`
+        <user-role1>,<user-role2>,...
+    authentication_realm : `str`
+        <section-in-jaas_config.conf>
     """
     registry_env = [
         {
@@ -379,6 +397,18 @@ def create_container_spec(
         {
             "name": "SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL",
             "value": security_protocol,
+        },
+        {
+            "name": "SCHEMA_REGISTRY_AUTHENTICATION_METHOD",
+            "value": authentication_method,
+        },
+        {
+            "name": "SCHEMA_REGISTRY_AUTHENTICATION_REALM",
+            "value": authentication_roles,
+        },
+        {
+            "name": "SCHEMA_REGISTRY_AUTHENTICATION_ROLES",
+            "value": authentication_realm,
         },
     ]
 

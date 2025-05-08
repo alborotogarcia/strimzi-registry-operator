@@ -97,6 +97,9 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
     sasl_oauthbearer_token_endpoint_url = get_nullable(
         spec, "saslOauthbearerTokenEndpointUrl"
     )
+    authentication_method = spec.get("authenticationMethod", "NONE")
+    authentication_roles = spec.get("authenticationRoles", "[*]")
+    authentication_realm = get_nullable(spec, "authenticationRealm")
     # Additional schema Registry configurations
     registry_compatibility_level = spec.get("compatibilityLevel", "forward")
     security_protocol = spec.get("securityProtocol", "SSL")
@@ -184,6 +187,9 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
             sasl_jaas_config=sasl_jaas_config,
             sasl_login_callback_handler_class=sasl_login_callback_handler_class,  # noqa: E501
             sasl_oauthbearer_token_endpoint_url=sasl_oauthbearer_token_endpoint_url,  # noqa: E501
+            authentication_method=authentication_method,
+            authentication_roles=authentication_roles,
+            authentication_realm=authentication_realm,
         )
         # Set the StrimziSchemaRegistry as the owner
         kopf.adopt(dep_body, owner=body)
