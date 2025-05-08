@@ -187,11 +187,11 @@ def create_deployment(
         Java Authentication and Authorization Service (JAAS)
         module that implements the SASL authentication mechanism
     sasl_login_callback_handler_class : `str`
-        Handles for OAuth callbacks to the authorization server for access tokens 
-        during client login. This enables automatic token renewal, ensuring 
-        continuous authentication without user intervention. Additionally, it 
-        handles login credentials for clients using the OAuth 2.0 password 
-        grant method.
+        Handles for OAuth callbacks to the authorization server for access
+        tokens during client login. This enables automatic token renewal, 
+        ensuring continuous authentication without user intervention. 
+        Additionally, it handles login credentials for clients using the 
+        OAuth 2.0 password grant method.
 
     Returns
     -------
@@ -266,6 +266,9 @@ def create_container_spec(
     registry_mem_request: Optional[str],
     compatibility_level: str,
     security_protocol: str,
+    sasl_mechanism: Optional[str],
+    sasl_jaas_config: Optional[str],
+    sasl_login_callback_handler_class: Optional[str],
 ) -> Dict[str, Any]:
     """Create the container spec for the Schema Registry deployment.
 
@@ -306,11 +309,11 @@ def create_container_spec(
         Java Authentication and Authorization Service (JAAS)
         module that implements the SASL authentication mechanism
     sasl_login_callback_handler_class : `str`
-        Handles for OAuth callbacks to the authorization server for access tokens 
-        during client login. This enables automatic token renewal, ensuring 
-        continuous authentication without user intervention. Additionally, it 
-        handles login credentials for clients using the OAuth 2.0 password 
-        grant method.
+        Handles for OAuth callbacks to the authorization server for access 
+        tokens during client login. This enables automatic token renewal, 
+        ensuring continuous authentication without user intervention. 
+        Additionally, it handles login credentials for clients using the 
+        OAuth 2.0 password grant method.
     """
     registry_env = [
         {
@@ -378,8 +381,8 @@ def create_container_spec(
                 "value": sasl_jaas_config,
             },
             {
-                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",
-                "value": sasl_login_callback_handler_class,
+        "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",
+        "value": sasl_login_callback_handler_class,
             }
         ])
     registry_container = {
