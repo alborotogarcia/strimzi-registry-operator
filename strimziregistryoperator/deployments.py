@@ -188,9 +188,9 @@ def create_deployment(
         module that implements the SASL authentication mechanism
     sasl_login_callback_handler_class : `str`
         Handles for OAuth callbacks to the authorization server for access
-        tokens during client login. This enables automatic token renewal, 
-        ensuring continuous authentication without user intervention. 
-        Additionally, it handles login credentials for clients using the 
+        tokens during client login. This enables automatic token renewal,
+        ensuring continuous authentication without user intervention.
+        Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
 
     Returns
@@ -309,10 +309,10 @@ def create_container_spec(
         Java Authentication and Authorization Service (JAAS)
         module that implements the SASL authentication mechanism
     sasl_login_callback_handler_class : `str`
-        Handles for OAuth callbacks to the authorization server for access 
-        tokens during client login. This enables automatic token renewal, 
-        ensuring continuous authentication without user intervention. 
-        Additionally, it handles login credentials for clients using the 
+        Handles for OAuth callbacks to the authorization server for access
+        tokens during client login. This enables automatic token renewal,
+        ensuring continuous authentication without user intervention.
+        Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
     """
     registry_env = [
@@ -370,21 +370,23 @@ def create_container_spec(
         },
     ]
 
-    if security_protocol.startswith('SASL'):
-        registry_env.extend([
-            {
-                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM",
-                "value": sasl_mechanism,
-            },
-            {
-                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG",
-                "value": sasl_jaas_config,
-            },
-            {
-        "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",
-        "value": sasl_login_callback_handler_class,
-            }
-        ])
+    if security_protocol.startswith("SASL"):
+        registry_env.extend(
+            [
+                {
+                    "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM",
+                    "value": sasl_mechanism,
+                },
+                {
+                    "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG",
+                    "value": sasl_jaas_config,
+                },
+                {
+                    "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",  # noqa: E501
+                    "value": sasl_login_callback_handler_class,
+                },
+            ]
+        )
     registry_container = {
         "name": "server",
         "image": f"{registry_image}:{registry_image_tag}",

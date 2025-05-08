@@ -1,5 +1,4 @@
-"""Tests for the certprocessor module.
-"""
+"""Tests for the certprocessor module."""
 
 import pytest
 
