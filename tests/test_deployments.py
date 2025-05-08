@@ -198,6 +198,9 @@ def test_create_deployment_configurations() -> None:
         registry_mem_request=None,
         compatibility_level="backward",
         security_protocol="SSL",
+        sasl_mechanism=None,
+        sasl_jaas_config=None,
+        sasl_login_callback_handler_class=None,
     )
     assert dep_body["spec"]["template"]["spec"]["containers"][0]["image"] == (
         f"{registry_image}:{registry_image_tag}"
@@ -238,6 +241,9 @@ def test_create_deployment_resource_settings() -> None:
         registry_mem_request="768M",
         compatibility_level="forward",
         security_protocol="SSL",
+        sasl_mechanism=None,
+        sasl_jaas_config=None,
+        sasl_login_callback_handler_class=None,
     )
     print(dep_body)
     resources = dep_body["spec"]["template"]["spec"]["containers"][0][
