@@ -96,7 +96,6 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
     # Additional schema Registry configurations
     registry_compatibility_level = spec.get("compatibilityLevel", "forward")
     security_protocol = spec.get("securityProtocol", "SSL")
-    security_protocol = spec.get("securityProtocol", "SSL")
 
     logger.info(
         "Creating a new Schema Registry deployment: %s with listener=%s "
