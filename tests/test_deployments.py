@@ -244,6 +244,7 @@ def test_create_deployment_resource_settings() -> None:
         sasl_mechanism=None,
         sasl_jaas_config=None,
         sasl_login_callback_handler_class=None,
+        sasl_oauthbearer_token_endpoint_url=None,
     )
     print(dep_body)
     resources = dep_body["spec"]["template"]["spec"]["containers"][0][
