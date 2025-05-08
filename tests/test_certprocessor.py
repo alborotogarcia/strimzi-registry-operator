@@ -155,6 +155,7 @@ def test_create_truststore(cluster_ca_cert):
     assert len(truststore) > 0
     assert password == "test1234"
 
+
 @pytest.mark.skip(reason="not now")
 def test_create_keystore(user_ca_cert, user_cert, user_key):
     # NB: This test depends upon the cert fixtures, which expire in 1 year
