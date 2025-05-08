@@ -197,7 +197,7 @@ def create_deployment(
         Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
     authentication_method : `str`
-        The SASL oauthbearer token endpoint url.
+        The authentication.method for your schema registry server.
     authentication_roles : `str`
         <user-role1>,<user-role2>,...
     authentication_realm : `str`
@@ -335,7 +335,7 @@ def create_container_spec(
     sasl_oauthbearer_token_endpoint_url : `str`
         The SASL oauthbearer token endpoint url.
     authentication_method : `str`
-        The SASL oauthbearer token endpoint url.
+        The authentication.method for your schema registry server.
     authentication_roles : `str`
         <user-role1>,<user-role2>,...
     authentication_realm : `str`
