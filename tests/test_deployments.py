@@ -201,6 +201,7 @@ def test_create_deployment_configurations() -> None:
         sasl_mechanism=None,
         sasl_jaas_config=None,
         sasl_login_callback_handler_class=None,
+        sasl_oauthbearer_token_endpoint_url=None,
     )
     assert dep_body["spec"]["template"]["spec"]["containers"][0]["image"] == (
         f"{registry_image}:{registry_image_tag}"
