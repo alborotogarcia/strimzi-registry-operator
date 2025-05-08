@@ -89,9 +89,13 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
     registry_cpu_request = get_nullable(spec, "cpuRequest")
     registry_mem_limit = get_nullable(spec, "memoryLimit")
     registry_mem_request = get_nullable(spec, "memoryRequest")
+    sasl_mechanism = get_nullable(spec, "saslMechanism")
+    sasl_jaas_config = get_nullable(spec, "saslJaasConfig")
+    sasl_login_callback_handler_class = get_nullable(spec, "saslLoginCallbackHandlerClass")
 
     # Additional schema Registry configurations
-    registry_compatibility_level = spec.get("compatibilitylevel", "forward")
+    registry_compatibility_level = spec.get("compatibilityLevel", "forward")
+    security_protocol = spec.get("securityProtocol", "SSL")
     security_protocol = spec.get("securityProtocol", "SSL")
 
     logger.info(
@@ -173,6 +177,9 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
             registry_mem_request=registry_mem_request,
             compatibility_level=registry_compatibility_level,
             security_protocol=security_protocol,
+            sasl_mechanism=sasl_mechanism,
+            sasl_jaas_config=sasl_jaas_config,
+            sasl_login_callback_handler_class=sasl_login_callback_handler_class
         )
         # Set the StrimziSchemaRegistry as the owner
         kopf.adopt(dep_body, owner=body)

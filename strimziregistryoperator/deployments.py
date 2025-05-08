@@ -137,6 +137,9 @@ def create_deployment(
     registry_mem_request: Optional[str],
     compatibility_level: str,
     security_protocol: str,
+    sasl_mechanism: Optional[str],
+    sasl_jaas_config: Optional[str],
+    sasl_login_callback_handler_class: Optional[str],
 ) -> Dict[str, Any]:
     """Create the JSON resource for a Deployment of the Confluence Schema
     Registry.
@@ -178,6 +181,17 @@ def create_deployment(
     security_protocol : `str`
         The Kafka store security policy. Can be SSL, PLAINTEXT, SASL_PLAINTEXT,
         or SASL_SSL.
+    sasl_mechanism : `str`
+        The SASL mechanism specified. Can be OAUTHBEARER or PLAIN.
+    sasl_jaas_config : `str`
+        Java Authentication and Authorization Service (JAAS)
+        module that implements the SASL authentication mechanism
+    sasl_login_callback_handler_class : `str`
+        Handles for OAuth callbacks to the authorization server for access tokens 
+        during client login. This enables automatic token renewal, ensuring 
+        continuous authentication without user intervention. Additionally, it 
+        handles login credentials for clients using the OAuth 2.0 password 
+        grant method.
 
     Returns
     -------
@@ -197,6 +211,9 @@ def create_deployment(
         registry_mem_request=registry_mem_request,
         compatibility_level=compatibility_level,
         security_protocol=security_protocol,
+        sasl_mechanism=sasl_mechanism,
+        sasl_jaas_config=sasl_jaas_config,
+        sasl_login_callback_handler_class=sasl_login_callback_handler_class,
     )
 
     # The pod template
@@ -283,6 +300,17 @@ def create_container_spec(
     security_protocol : `str`
         The Kafka store security policy. Can be SSL, PLAINTEXT, SASL_PLAINTEXT,
         or SASL_SSL.
+    sasl_mechanism : `str`
+        The SASL mechanism specified. Can be OAUTHBEARER or PLAIN.
+    sasl_jaas_config : `str`
+        Java Authentication and Authorization Service (JAAS)
+        module that implements the SASL authentication mechanism
+    sasl_login_callback_handler_class : `str`
+        Handles for OAuth callbacks to the authorization server for access tokens 
+        during client login. This enables automatic token renewal, ensuring 
+        continuous authentication without user intervention. Additionally, it 
+        handles login credentials for clients using the OAuth 2.0 password 
+        grant method.
     """
     registry_env = [
         {
@@ -339,6 +367,21 @@ def create_container_spec(
         },
     ]
 
+    if security_protocol.startswith('SASL'):
+        registry_env.extend([
+            {
+                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM",
+                "value": sasl_mechanism,
+            },
+            {
+                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG",
+                "value": sasl_jaas_config,
+            },
+            {
+                "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",
+                "value": sasl_login_callback_handler_class,
+            }
+        ])
     registry_container = {
         "name": "server",
         "image": f"{registry_image}:{registry_image_tag}",
