@@ -140,6 +140,7 @@ def create_deployment(
     sasl_mechanism: Optional[str],
     sasl_jaas_config: Optional[str],
     sasl_login_callback_handler_class: Optional[str],
+    sasl_oauthbearer_token_endpoint_url: Optional[str],
 ) -> Dict[str, Any]:
     """Create the JSON resource for a Deployment of the Confluence Schema
     Registry.
@@ -192,6 +193,9 @@ def create_deployment(
         ensuring continuous authentication without user intervention.
         Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
+    sasl_oauthbearer_token_endpoint_url : `str`
+        The SASL oauthbearer token endpoint url.
+
 
     Returns
     -------
@@ -214,6 +218,7 @@ def create_deployment(
         sasl_mechanism=sasl_mechanism,
         sasl_jaas_config=sasl_jaas_config,
         sasl_login_callback_handler_class=sasl_login_callback_handler_class,
+        sasl_oauthbearer_token_endpoint_url=sasl_oauthbearer_token_endpoint_url,  # noqa: E501
     )
 
     # The pod template
@@ -269,6 +274,7 @@ def create_container_spec(
     sasl_mechanism: Optional[str],
     sasl_jaas_config: Optional[str],
     sasl_login_callback_handler_class: Optional[str],
+    sasl_oauthbearer_token_endpoint_url: Optional[str],
 ) -> Dict[str, Any]:
     """Create the container spec for the Schema Registry deployment.
 
@@ -314,6 +320,8 @@ def create_container_spec(
         ensuring continuous authentication without user intervention.
         Additionally, it handles login credentials for clients using the
         OAuth 2.0 password grant method.
+    sasl_oauthbearer_token_endpoint_url : `str`
+        The SASL oauthbearer token endpoint url.
     """
     registry_env = [
         {
@@ -388,6 +396,10 @@ def create_container_spec(
                 {
                     "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_LOGIN_CALLBACK_HANDLER_CLASS",  # noqa: E501
                     "value": sasl_login_callback_handler_class,
+                },
+                {
+                    "name": "SCHEMA_REGISTRY_KAFKASTORE_SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL",  # noqa: E501
+                    "value": sasl_oauthbearer_token_endpoint_url,
                 },
             ]
         )
