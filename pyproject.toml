@@ -8,6 +8,10 @@ build-backend = 'setuptools.build_meta'
 
 [tool.setuptools_scm]
 
+[tool.poetry]
+name = 'strimziregistryoperator'
+version = '0.7.0'
+
 [tool.coverage.run]
 parallel = true
 branch = true
