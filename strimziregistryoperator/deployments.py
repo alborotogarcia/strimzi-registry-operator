@@ -317,6 +317,10 @@ def create_container_spec(
     """
     registry_env = [
         {
+            "name": "CUB_CLASSPATH",
+            "value": "/usr/share/java/confluent-security/schema-registry/*:/usr/share/java/schema-registry/*:/usr/share/java/schema-registry-plugins/*:/usr/share/java/cp-base-new/*",  # noqa: E501
+        },
+        {
             "name": "SCHEMA_REGISTRY_HOST_NAME",
             "valueFrom": {"fieldRef": {"fieldPath": "status.podIP"}},
         },
