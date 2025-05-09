@@ -65,7 +65,7 @@ def create_registry(spec, meta, namespace, name, uid, logger, body, **kwargs):
             )
 
     try:
-        listener_name = spec["listener"]
+        listener_name = spec["kafka"]["listener"]
     except KeyError:
         listener_name = "tls"
         logger.warning(
